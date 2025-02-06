@@ -1,5 +1,9 @@
 package com.zosh.repository;
 
-public interface CommentReposity {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.zosh.models.Comment;
+
+public interface CommentReposity extends JpaRepository<Comment, Integer >{
 
 }
