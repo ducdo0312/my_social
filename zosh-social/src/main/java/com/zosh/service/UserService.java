@@ -17,4 +17,6 @@ public interface UserService {
 	public List<User> searchUser(String query);
 
 	public User updateUser(User user, Integer userId) throws Exception;
+	
+	public User findUserByJwt(String jwt);
 }

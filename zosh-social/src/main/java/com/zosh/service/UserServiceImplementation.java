@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zosh.config.JwtProvider;
 import com.zosh.models.User;
 import com.zosh.repository.UserRepository;
 
@@ -23,6 +24,7 @@ public class UserServiceImplementation implements UserService{
 		newUser.setLastName(user.getLastName());
 		newUser.setPassword(user.getPassword());
 		newUser.setId(user.getId());
+		newUser.setGender(user.getGender());
 		
 		if(userRepository.findById(user.getId()).isPresent()) {
 			throw new Exception("User existed, user different Id please");
@@ -53,17 +55,20 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public User followUser(Integer userId1, Integer userId2) throws Exception {
-		User user1 = findUserById(userId1);
+	public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+		
+		
+		
+		User reqUser = findUserById(reqUserId);
 		
 		User user2 = findUserById(userId2);
 		
-		user2.getFollowers().add(user1.getId());
-		user1.getFollowings().add(user2.getId());
+		user2.getFollowers().add(reqUser.getId());
+		reqUser.getFollowings().add(user2.getId());
 		
-		userRepository.save(user1);
+		userRepository.save(reqUser);
 		userRepository.save(user2);
-		return user1;
+		return reqUser;
 	}
 
 	@Override
@@ -94,7 +99,9 @@ public class UserServiceImplementation implements UserService{
 		if(user.getFollowings() != null) {
 			oldUser.setFollowings(user.getFollowings());
 		}
-		
+		if(user.getFollowings() != null) {
+			oldUser.setGender(user.getGender());
+		}
 		User updatedUser = userRepository.save(oldUser);
 		
 		
@@ -105,6 +112,16 @@ public class UserServiceImplementation implements UserService{
 	public List<User> searchUser(String query) {
 		// TODO Auto-generated method stub
 		return userRepository.searchUser(query);
+	}
+
+	@Override
+	public User findUserByJwt(String jwt) {
+		
+		String email = JwtProvider.getEmailFromJwtToken(jwt);
+		
+		User user = userRepository.findByEmail(email);
+		
+		return user;
 	}
 
 }

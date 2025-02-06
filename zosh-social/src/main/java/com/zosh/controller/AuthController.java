@@ -82,7 +82,7 @@ public class AuthController {
     }
 
 	private Authentication authenticate(String email, String password) {
-		UserDetails userDetails = customerUserDetails.loadUserByUsername(password);
+		UserDetails userDetails = customerUserDetails.loadUserByUsername(email);
 		
 				
 		if(userDetails == null) {
