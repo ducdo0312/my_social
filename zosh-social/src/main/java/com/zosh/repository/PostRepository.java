@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.zosh.models.Post;
 
-public interface PostReposity extends JpaRepository<Post, Integer>{
+public interface PostRepository extends JpaRepository<Post, Integer>{
 
 	@Query("select p from Post p where "
 			+ "p.user.id=:userId")

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.zosh.models.Post;
 import com.zosh.models.User;
-import com.zosh.repository.PostReposity;
+import com.zosh.repository.PostRepository;
 import com.zosh.repository.UserRepository;
 
 @Service
 public class PostServiceImplementation implements PostService{
 
 	@Autowired
-	PostReposity postReposity; 
+	PostRepository postRepository; 
 	
 	@Autowired
 	UserRepository userRepository;
@@ -35,7 +35,7 @@ public class PostServiceImplementation implements PostService{
 		newPost.setCreateAt(LocalDateTime.now());
 		newPost.setVideo(post.getVideo());
 		newPost.setUser(user);
-		return postReposity.save(newPost);
+		return postRepository.save(newPost);
 	}
 
 	@Override
@@ -53,19 +53,19 @@ public class PostServiceImplementation implements PostService{
                 userRepository.save(u);
             }
         }
-		postReposity.delete(post);
+		postRepository.delete(post);
 		return "Post deleted successfully";
 	}
 
 	@Override
 	public List<Post> findPostByUserId(Integer userId) {
 		
-		return postReposity.findPostByUserId(userId);
+		return postRepository.findPostByUserId(userId);
 	}
 
 	@Override
 	public Post findPostById(Integer postId) throws Exception{
-		Optional<Post> opt = postReposity.findById(postId);
+		Optional<Post> opt = postRepository.findById(postId);
 		if(opt.isEmpty()) {
 			throw new Exception("Post not found with id " + postId);
 		}
@@ -76,7 +76,7 @@ public class PostServiceImplementation implements PostService{
 	@Override
 	public List<Post> findAllPost() {
 		
-		return postReposity.findAll();
+		return postRepository.findAll();
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class PostServiceImplementation implements PostService{
 		}
 		
 		
-		return postReposity.save(post);
+		return postRepository.save(post);
 	}
 
 }

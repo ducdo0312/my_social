@@ -1,6 +1,7 @@
 package com.zosh.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,9 +37,9 @@ public class CommentController {
 	}
 	
 	@PutMapping("/api/comments/like/{commentId}")
-	public Comment likeComment(@RequestBody Comment comment,
+	public Comment likeComment(
 			@RequestHeader("Authorization") String jwt,
-			@PathVariable("postId") Integer commentId) throws Exception {
+			@PathVariable("commentId") Integer commentId) throws Exception {
 		
 		User user = userService.findUserByJwt(jwt);
 		
@@ -48,4 +49,9 @@ public class CommentController {
 		return likeComment;
 	}
 	
+//	@DeleteMapping("/api/comments/delete")
+//	public Comment deleteComment(
+//			@RequestHeader("Authorization") String jwt,
+//			)
+//	
 }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.zosh.models.Comment;
 import com.zosh.models.Post;
 import com.zosh.models.User;
-import com.zosh.repository.CommentReposity;
-import com.zosh.repository.PostReposity;
+import com.zosh.repository.CommentRepository;
+import com.zosh.repository.PostRepository;
 
 import jakarta.persistence.PostRemove;
 
@@ -25,10 +25,10 @@ public class CommentServiceImplementation implements CommentService{
 	private UserService userService;
 	
 	@Autowired
-	private CommentReposity commentReposity;
+	private CommentRepository commentRepository;
 	
 	@Autowired
-	private PostReposity postRepository;
+	private PostRepository postRepository;
 	
 	@Override
 	public Comment createCommment(
@@ -44,14 +44,15 @@ public class CommentServiceImplementation implements CommentService{
 		comment.setContent(comment.getContent());
 		comment.setCreatedAt(LocalDateTime.now());
 		
-		Comment savedComment = commentReposity.save(comment);
+		Comment savedComment = commentRepository.save(comment);
 		post.getComments().add(savedComment);
+		postRepository.save(post);
 		return savedComment;
 	}
 
 	@Override
 	public Comment findCommentById(Integer commentId) throws Exception{
-		Optional<Comment> opt = commentReposity.findById(commentId);
+		Optional<Comment> opt = commentRepository.findById(commentId);
 		
 		if(opt.isEmpty()) {
 			throw new Exception("comment not exist");
@@ -72,7 +73,7 @@ public class CommentServiceImplementation implements CommentService{
 		else {
 			comment.getLiked().remove(user);
 		}
-		return commentReposity.save(comment);
+		return commentRepository.save(comment);
 	}
 
 }
