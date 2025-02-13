@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zoh.exceptions.UserException;
 import com.zosh.config.JwtProvider;
 import com.zosh.models.User;
 import com.zosh.repository.UserRepository;
@@ -36,7 +37,7 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public User findUserById(Integer userId) throws Exception {
+	public User findUserById(Integer userId) throws UserException {
 		
 		Optional<User> user= userRepository.findById(userId);
 		
@@ -45,7 +46,7 @@ public class UserServiceImplementation implements UserService{
 		}
 		
 		
-		throw new Exception("User not exist with userid " + userId);
+		throw new UserException("User not exist with userid " + userId);
 	}
 
 	@Override

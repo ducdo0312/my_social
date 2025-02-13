@@ -2,13 +2,14 @@ package com.zosh.service;
 
 import java.util.List;
 
+import com.zoh.exceptions.UserException;
 import com.zosh.models.User;
 
 public interface UserService {
 	
 	public User registerUser(User user) throws Exception;
 	
-	public User findUserById(Integer userId) throws Exception;
+	public User findUserById(Integer userId) throws UserException;
 	
 	public User findUserByEmail(String email);
 	
