@@ -26,6 +26,7 @@ public class User {
 	private String password;
 	
 	
+	
 	private List<Integer> followers = new ArrayList<>();
 	
 	private String gender;

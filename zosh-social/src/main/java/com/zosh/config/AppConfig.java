@@ -37,7 +37,8 @@ public class AppConfig {
 		return http.build();		
 	}
 	
-	private CorsConfigurationSource corsConfigurationSource() {
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
 		// TODO Auto-generated method stub
 		return new CorsConfigurationSource() {
 			
@@ -45,10 +46,12 @@ public class AppConfig {
 			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 				
 				CorsConfiguration cfg = new CorsConfiguration();
-				cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000/","a"));
+				cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000/","http://localhost:3000"));
 				cfg.setAllowedMethods(Collections.singletonList("*"));
-				cfg. setAllowedOriginPatterns(null);
-				cfg.setAllowedHeaders(Arrays.asList("Authorization"));
+				cfg. setAllowedOriginPatterns(Arrays.asList("http://localhost:3000","http://localhost:3000/"));
+				cfg.setAllowCredentials(true);
+				cfg.setExposedHeaders(Arrays.asList("Authorization"));
+				cfg.setAllowedHeaders(Collections.singletonList("*"));
 				cfg.setMaxAge(3600L);
 				return cfg;
 			}

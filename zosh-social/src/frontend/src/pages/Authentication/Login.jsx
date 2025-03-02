@@ -2,15 +2,19 @@ import React, {useState} from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { Button, TextField } from '@mui/material';
 import * as Yup from "yup"
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../Redux/Auth/auth.action';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const initialValues ={email:"", password:""};
-  const[ formValue, setFormValue] = useState();
-  const validationSchema = {
-    email: Yup.string().email("Invalid email").required("Email is required"), 
-    password:Yup.string().min(6,"Password must be at least 6 characters").required("Password is Required")};
+  const dispatch=useDispatch();
+  const navigate = useNavigate();
+
+
   const handleSubmit=(values) =>{
     console.log('handle submit',values)
+    dispatch(loginUserAction(values));
   };
   return (
     <>
@@ -52,6 +56,10 @@ const Login = () => {
           <Button sx = {{padding: ".8rem 0rem"}} fullWidth type='submit' variant ="contained" color='primary'>Login</Button>
         </Form>
       </Formik>
+      <div className='flex gap-2 items-center justify-center pt-5'>
+        <p>You don't have account?</p>
+        <Button onClick={()=>navigate("../register")}>Register</Button>
+      </div>
     </>
   )
 }

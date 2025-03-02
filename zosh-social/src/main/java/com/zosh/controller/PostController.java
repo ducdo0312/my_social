@@ -86,7 +86,7 @@ public class PostController {
 		return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
 	}
 	
-	@PutMapping("/api/posts/like/{postId}/user/{userId}")
+	@PutMapping("/api/posts/like/{postId}")
 	public ResponseEntity<Post> likePostHandler(
 			@RequestHeader("Authorization") String jwt, 
 			@PathVariable Integer postId) throws Exception{
